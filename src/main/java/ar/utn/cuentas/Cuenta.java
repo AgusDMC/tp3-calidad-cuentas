@@ -23,7 +23,7 @@ public class Cuenta {
 
   public void transferir(double monto, Cuenta destino) {
     validarMonto(monto);
-    if (destino == null) {
+    if (destino == null || destino == this) {
       throw new IllegalArgumentException("La cuenta destino no es válida");
     }
     if (monto > saldo) {
