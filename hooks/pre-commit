@@ -1,0 +1,25 @@
+#!/bin/sh
+# Pre-commit hook: Formatter -> Linter -> Tests. Si un paso falla, el commit se aborta.
+
+echo "[pre-commit] 1/3 Formatter (Spotless + Google Java Format)..."
+mvn -q spotless:check || {
+  echo "[pre-commit] FALLO: el código no respeta el formato. Ejecutá 'mvn spotless:apply'. Commit abortado."
+  exit 1
+}
+echo "[pre-commit] 1/3 OK"
+
+echo "[pre-commit] 2/3 Linter (Checkstyle)..."
+mvn -q checkstyle:check || {
+  echo "[pre-commit] FALLO: el linter encontró violaciones. Commit abortado."
+  exit 1
+}
+echo "[pre-commit] 2/3 OK"
+
+echo "[pre-commit] 3/3 Tests unitarios + cobertura (JUnit 5 + JaCoCo)..."
+mvn -q test || {
+  echo "[pre-commit] FALLO: hay tests en rojo o la cobertura está debajo del umbral. Commit abortado."
+  exit 1
+}
+echo "[pre-commit] 3/3 OK"
+echo "[pre-commit] Todos los controles en verde. Commit permitido."
+exit 0
