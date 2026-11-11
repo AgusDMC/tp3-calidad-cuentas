@@ -45,6 +45,13 @@ class CuentaTest {
   }
 
   @Test
+  void transferir_aLaMismaCuenta_lanzaExcepcion() {
+    Cuenta cuenta = new Cuenta("Ana", 1000);
+
+    assertThrows(IllegalArgumentException.class, () -> cuenta.transferir(10, cuenta));
+  }
+
+  @Test
   void transferir_destinoNulo_lanzaExcepcion() {
     Cuenta cuenta = new Cuenta("Ana", 1000);
 
