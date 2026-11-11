@@ -16,7 +16,7 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>5.11.3</version>
+      <version>5.14.4</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -76,6 +76,17 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <!-- Análisis estático: PMD (complejidad) y CPD (duplicación) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.26.0</version>
+        <configuration>
+          <rulesets><ruleset>pmd-rules.xml</ruleset></rulesets>
+          <minimumTokens>40</minimumTokens>
+          <printFailingErrors>true</printFailingErrors>
+        </configuration>
       </plugin>
     </plugins>
   </build>
